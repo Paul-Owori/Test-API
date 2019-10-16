@@ -1,6 +1,5 @@
 //calling expressnpm
 const express = require('express');
-const bodyParser = require('body-parser');
 const userRoutes = require("./users");
 const mongoose = require('mongoose');
 
@@ -23,7 +22,12 @@ const port = process.env.PORT || 3000;
 
 //Starting the app
 let DB_URI = "mongodb://localhost:27017/test-db"
-mongoose.connect(DB_URI)
+const opts = {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useFindAndModify: false,
+}
+mongoose.connect(DB_URI, opts)
     .then((res, err) => {
         if (err) {
             console.error('There is an error:', err)
