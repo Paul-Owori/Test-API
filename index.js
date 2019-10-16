@@ -1,6 +1,6 @@
 //calling expressnpm
 const express = require('express');
-const userRoutes = require("./users");
+const userRoutes = require("./routes/Users");
 const mongoose = require('mongoose');
 
 
@@ -13,9 +13,17 @@ app.use('/users', userRoutes);
 
 
 //Testing the app
-app.get('/', (req, res) => {
+app.get('/*', (req, res) => {
     res.json('Hello')
 });
+
+/**
+ * const path = require("path");
+
+ * app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "/client/index.html"));
+});
+ */
 
 //creating a port
 const port = process.env.PORT || 3000;
@@ -27,12 +35,14 @@ const opts = {
     useUnifiedTopology: true,
     useFindAndModify: false,
 }
+
 mongoose.connect(DB_URI, opts)
     .then((res, err) => {
         if (err) {
             console.error('There is an error:', err)
             return;
         } else {
+            console.log("Database online");
             app.listen(port, () => {
                 console.log("App is listening on port ", port)
             })
